@@ -9,12 +9,15 @@ class CustomAnswerButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 20),
-      child: GestureDetector(
+      width: double.maxFinite,
+      decoration: BoxDecoration(borderRadius: BorderRadius.circular(10)),
+      child: ElevatedButton(
           child: Text(
             answerText,
+            textAlign: TextAlign.center,
             style: AppTextStyle.answerText,
           ),
-          onTap: () => nextQuestion()),
+          onPressed: () => nextQuestion()),
     );
   }
 }

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:quiz_challenge/core/components/app/style/app_text_style-component.dart';
 import 'package:quiz_challenge/core/components/app/widgets/custom_answer_button.dart';
+import 'package:quiz_challenge/core/views/result/result_view.dart';
 import '../../models/answer_model.dart';
 import '../../models/question_model.dart';
 import '../../services/quiz_services.dart';
@@ -65,59 +66,54 @@ class _QuizViewState extends State<QuizView> {
       body: Observer(
         builder: (context) {
           return Container(
-            child: _index < quiz.length
-                ? Column(
-                    children: <Widget>[
-                      SizedBox(height: 23),
-                      QuizLinearProgressIndicator(
-                        value: _index / quiz.length ?? .0,
-                      ),
-                      Container(
-                        margin: const EdgeInsets.fromLTRB(10, 10, 20, 0),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          children: <Widget>[
-                            _index >= 1
-                                ? CustomButtonPrevious(
-                                    _quizServices.previousQuestion, 1)
-                                : Container(),
-                            CustomSizedBox(width: 20),
-                            CustomButtonNext(_quizServices.nextQuestion),
-                          ],
+              child: _index < quiz.length
+                  ? Column(
+                      children: <Widget>[
+                        SizedBox(height: 23),
+                        QuizLinearProgressIndicator(
+                          value: _index / quiz.length ?? .0,
                         ),
-                      ),
-                      Expanded(
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: <Widget>[
-                            Text(
-                              quiz[_index]['question'],
-                              style: AppTextStyle.questionText,
-                            ),
-                            ...(quiz[_index]['answers']
-                                    as List<Map<String, Object>>)
-                                .map(
-                                  (answer) => CustomAnswerButton(
-                                    answerText: answer['answer'],
-                                    nextQuestion: _quizServices.nextQuestion,
-                                  ),
-                                )
-                                .toList(),
-                          ],
+                        Container(
+                          margin: const EdgeInsets.fromLTRB(10, 10, 20, 0),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            children: <Widget>[
+                              _index >= 1
+                                  ? CustomButtonPrevious(
+                                      _quizServices.previousQuestion, 1)
+                                  : Container(),
+                              CustomSizedBox(width: 20),
+                              CustomButtonNext(_quizServices.nextQuestion),
+                            ],
+                          ),
                         ),
-                      ),
-                    ],
-                  )
-                : Column(
-                    children: <Widget>[
-                      TextButton(
-                        onPressed: _quizServices.playAgain,
-                        child: Text('Play again'),
-                      )
-                    ],
-                  ),
-          );
+                        Expanded(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: <Widget>[
+                              Text(
+                                quiz[_index]['question'],
+                                style: AppTextStyle.questionText,
+                              ),
+                              CustomSizedBox(
+                                height: 10,
+                              ),
+                              ...(quiz[_index]['answers']
+                                      as List<Map<String, Object>>)
+                                  .map(
+                                    (answer) => CustomAnswerButton(
+                                      answerText: answer['answer'],
+                                      nextQuestion: _quizServices.nextQuestion,
+                                    ),
+                                  )
+                                  .toList(),
+                            ],
+                          ),
+                        ),
+                      ],
+                    )
+                  : ResultView(_quizServices.playAgain));
         },
       ),
     );
