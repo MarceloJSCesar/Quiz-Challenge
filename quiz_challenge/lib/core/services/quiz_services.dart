@@ -8,8 +8,12 @@ abstract class _QuizServicesBase with Store {
   @observable
   int questionIndex = 0;
 
+  @observable
+  double totalScore = 0;
+
   @action
-  void nextQuestion() {
+  void nextQuestion(double score) {
+    totalScore += score;
     questionIndex += 1;
   }
 
@@ -20,6 +24,7 @@ abstract class _QuizServicesBase with Store {
 
   @action
   void playAgain() {
+    totalScore = 0;
     questionIndex = 0;
   }
 }

@@ -4,7 +4,9 @@ import '../style/app_text_style-component.dart';
 class CustomAnswerButton extends StatelessWidget {
   final String answerText;
   final Function nextQuestion;
-  CustomAnswerButton({@required this.answerText, this.nextQuestion});
+  final double totalScore;
+  CustomAnswerButton(
+      {@required this.answerText, this.nextQuestion, this.totalScore});
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -17,7 +19,7 @@ class CustomAnswerButton extends StatelessWidget {
             textAlign: TextAlign.center,
             style: AppTextStyle.answerText,
           ),
-          onPressed: () => nextQuestion()),
+          onPressed: nextQuestion),
     );
   }
 }

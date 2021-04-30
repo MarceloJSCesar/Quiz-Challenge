@@ -24,15 +24,30 @@ mixin _$QuizServices on _QuizServicesBase, Store {
     });
   }
 
+  final _$totalScoreAtom = Atom(name: '_QuizServicesBase.totalScore');
+
+  @override
+  double get totalScore {
+    _$totalScoreAtom.reportRead();
+    return super.totalScore;
+  }
+
+  @override
+  set totalScore(double value) {
+    _$totalScoreAtom.reportWrite(value, super.totalScore, () {
+      super.totalScore = value;
+    });
+  }
+
   final _$_QuizServicesBaseActionController =
       ActionController(name: '_QuizServicesBase');
 
   @override
-  void nextQuestion() {
+  void nextQuestion(double score) {
     final _$actionInfo = _$_QuizServicesBaseActionController.startAction(
         name: '_QuizServicesBase.nextQuestion');
     try {
-      return super.nextQuestion();
+      return super.nextQuestion(score);
     } finally {
       _$_QuizServicesBaseActionController.endAction(_$actionInfo);
     }
@@ -63,7 +78,8 @@ mixin _$QuizServices on _QuizServicesBase, Store {
   @override
   String toString() {
     return '''
-questionIndex: ${questionIndex}
+questionIndex: ${questionIndex},
+totalScore: ${totalScore}
     ''';
   }
 }

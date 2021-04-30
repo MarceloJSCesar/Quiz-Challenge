@@ -9,4 +9,6 @@ class AppTextStyle {
     color: Colors.black,
     fontSize: 15,
   );
+  static TextStyle totalScoreText =
+      TextStyle(color: Colors.black, fontSize: 18);
 }
