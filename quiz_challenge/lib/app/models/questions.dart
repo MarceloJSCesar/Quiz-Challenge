@@ -114,10 +114,17 @@ class Representation extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(10),
       decoration: BoxDecoration(
-          border: Border.fromBorderSide(BorderSide(color: borderColor))),
+        border: Border.fromBorderSide(
+          BorderSide(
+            color: borderColor,
+          ),
+        ),
+      ),
       child: Text(
         answerText,
-        style: TextStyle(color: fontColor),
+        style: TextStyle(
+          color: fontColor,
+        ),
       ),
     );
   }
