@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import '../core/views/quiz/quiz_view.dart';
+import './views/home_view.dart';
 
-class Appwidget extends StatelessWidget {
+class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: QuizView(),
+      home: HomeView(),
     );
   }
 }

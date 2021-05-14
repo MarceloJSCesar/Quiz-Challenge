@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import '../../../components/app/style/app_icon_style_component.dart';
-import '../../../components/app/style/app_border_style_component.dart';
+import '../app/app_border_style_component.dart';
+import '../app/app_icon_style_component.dart';
 
 class CustomButtonPrevious extends StatelessWidget {
   final Function previousQuestion;
@@ -24,7 +24,7 @@ class CustomButtonPrevious extends StatelessWidget {
             ]),
         child: AppIconStyle.buttonPreviousStyle,
       ),
-      onTap: () => previousQuestion(index),
+      onTap: previousQuestion,
     );
   }
 }

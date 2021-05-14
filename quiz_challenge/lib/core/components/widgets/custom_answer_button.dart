@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../style/app_text_style-component.dart';
+import '../app/app_text_style-component.dart';
 
 class CustomAnswerButton extends StatelessWidget {
   final String answerText;

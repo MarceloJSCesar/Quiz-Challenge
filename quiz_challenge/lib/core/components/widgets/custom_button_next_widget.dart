@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import '../../../components/app/style/app_icon_style_component.dart';
-import '../../../components/app/style/app_border_style_component.dart';
+import 'package:wuiz/core/components/app/app_icon_style_component.dart';
+import '../app/app_border_style_component.dart';
 
 class CustomButtonNext extends StatelessWidget {
   final Function nextQuestion;
