@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:quiz_challenge/core/components/widgets/body/body_header_buttons.dart';
+import 'package:quiz_challenge/core/components/widgets/body/body_linear_progress_indicator.dart';
+import 'package:quiz_challenge/core/components/widgets/body_widget.dart';
+import 'package:quiz_challenge/core/components/widgets/result_page.dart';
+import '../services/answer_service.dart';
 import '../components/app/app_sizedBox.dart';
 import '../components/representation_widget.dart';
-import '../components/widgets/custom_button_next_widget.dart';
-import '../components/widgets/custom_button_previous_widget.dart';
 
 class HomeView extends StatefulWidget {
   @override
@@ -10,153 +14,41 @@ class HomeView extends StatefulWidget {
 }
 
 class _HomeViewState extends State<HomeView> {
-  String questionType;
-  int index = 0;
-  double totalScore = .0;
-
-  void previousQuestion(int value) {
-    setState(
-      () {
-        index -= value;
-      },
-    );
-  }
-
-  void nextQuestion(double score) {
-    setState(() {
-      totalScore += score;
-      index += 1;
-    });
-  }
-
-  void playAgain(int value) {
-    setState(() {
-      totalScore = .0;
-      index = value;
-    });
-  }
-
+  final _answerService = AnswerService();
+  int get index => _answerService.index;
+  double get totalScore => _answerService.totalScore;
+  void get previousQuestion => _answerService.previousQuestion(1);
+  void get playAgain => _answerService.playAgain(0);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        child: index < Representation.questions.length
-            ? Column(
-                children: [
-                  SizedBox(
-                    height: 23,
-                  ),
-                  LinearProgressIndicator(
-                    value: index / Representation.questions.length ?? .0,
-                    backgroundColor: Colors.grey,
-                    valueColor: AlwaysStoppedAnimation<Color>(
-                      Colors.greenAccent,
+      body: Observer(
+        builder: (context) => Container(
+          child: index < Representation.questions.length
+              ? Column(
+                  children: <Widget>[
+                    AppSizedBox(
+                      height: 23,
                     ),
-                  ),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  Container(
-                    margin: const EdgeInsets.only(right: 10),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        if (index >= 1)
-                          CustomButtonPrevious(
-                              () => previousQuestion(1), index),
-                        CustomSizedBox(
-                          width: 20,
-                        ),
-                        CustomButtonNext(
-                          () => nextQuestion(.0),
-                        ),
-                      ],
+                    BodyLinearProgressIndicator(index: index),
+                    AppSizedBox(
+                      height: 10,
                     ),
-                  ),
-                  Expanded(
-                    child: Container(
-                      margin: const EdgeInsets.symmetric(horizontal: 20),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: <Widget>[
-                          ...(Representation.questions[index]['question']
-                                  as dynamic)
-                              .map(
-                            (question) {
-                              questionType = question['type'];
-                              return Text(
-                                question['text'],
-                                style: TextStyle(
-                                    color: Colors.black, fontSize: 18),
-                              );
-                            },
-                          ).toList(),
-                          SizedBox(
-                            height: 20,
-                          ),
-                          if (questionType == 'cara a cara')
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: <Widget>[
-                                ...(Representation.questions[index]['answers'])
-                                    .map(
-                                  (answer) {
-                                    return GestureDetector(
-                                      child: Representation(
-                                        type: questionType,
-                                        answers: answer,
-                                      ),
-                                      onTap: () =>
-                                          nextQuestion(answer['score']),
-                                    );
-                                  },
-                                ).toList(),
-                              ],
-                            ),
-                          if (questionType == 'multipla escolha')
-                            ...(Representation.questions[index]['answers']).map(
-                              (answer) {
-                                return GestureDetector(
-                                  child: Representation(
-                                    type: questionType,
-                                    answers: answer,
-                                  ),
-                                  onTap: () => nextQuestion(answer['score']),
-                                );
-                              },
-                            ).toList(),
-                          if (questionType == 'email address')
-                            ...(Representation.questions[index]['answers']).map(
-                              (answer) {
-                                return Container(
-                                  margin: const EdgeInsets.symmetric(
-                                      horizontal: 40),
-                                  child: TextFormField(
-                                    textInputAction: TextInputAction.done,
-                                    onFieldSubmitted: (val) =>
-                                        nextQuestion(answer['score']),
-                                    decoration: InputDecoration(
-                                      hintText: 'Enter your email',
-                                      border: OutlineInputBorder(),
-                                    ),
-                                  ),
-                                );
-                              },
-                            ).toList(),
-                        ],
+                    BodyHeaderButtons(
+                      index: index,
+                      answerService: _answerService,
+                      previousQuestion: _answerService.previousQuestion,
+                    ),
+                    Expanded(
+                      child: BodyWidget(
+                        index: index,
+                        answerService: _answerService,
                       ),
                     ),
-                  ),
-                ],
-              )
-            : Center(
-                child: TextButton(
-                  child: Text('Play Again | score: $totalScore '),
-                  onPressed: () => playAgain(0),
-                ),
-              ),
+                  ],
+                )
+              : ResultView(_answerService.playAgain, totalScore),
+        ),
       ),
     );
   }
