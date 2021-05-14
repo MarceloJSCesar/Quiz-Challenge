@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../representation_widget.dart';
 import '../../services/answer_service.dart';
 import '../../components/app/app_sizedBox.dart';
+import '../../components/widgets/body/representation/website_url_answer_representation.dart';
 import '../../components/widgets/body/representation/cara_a_cara_answer_representation.dart';
 import '../../components/widgets/body/representation/email_address_answer_representation.dart';
 import '../../components/widgets/body/representation/multipla_escolha_answer_representation.dart';
@@ -49,6 +50,11 @@ class BodyWidget extends StatelessWidget {
             ),
           if (questionType == 'email address')
             EmailAddressAnswerRepresentation(
+              index: index,
+              answerService: answerService,
+            ),
+          if (questionType == 'website url')
+            WebsiteUrlAnswerRepresentation(
               index: index,
               answerService: answerService,
             ),

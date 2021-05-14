@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:email_validator/email_validator.dart';
 import '../../../representation_widget.dart';
 import '../../../../services/answer_service.dart';
 
 // ignore: must_be_immutable
-class EmailAddressAnswerRepresentation extends StatelessWidget {
+class WebsiteUrlAnswerRepresentation extends StatelessWidget {
   final int index;
   final AnswerService answerService;
   GlobalKey<FormState> formkey = GlobalKey<FormState>();
-  EmailAddressAnswerRepresentation(
+  WebsiteUrlAnswerRepresentation(
       {@required this.index, @required this.answerService});
   @override
   Widget build(BuildContext context) {
@@ -22,19 +21,22 @@ class EmailAddressAnswerRepresentation extends StatelessWidget {
                   margin: const EdgeInsets.symmetric(horizontal: 20),
                   child: TextFormField(
                     autovalidateMode: AutovalidateMode.always,
+                    textInputAction: TextInputAction.done,
                     validator: (val) {
-                      if (!EmailValidator.validate(val)) {
-                        return 'email invalid';
+                      if (!val.startsWith('https://') &&
+                              !val.startsWith('http://') ||
+                          val.length < 15 ||
+                          !val.contains('.')) {
+                        return 'invalid url';
                       } else {
                         return null;
                       }
                     },
-                    textInputAction: TextInputAction.done,
                     onFieldSubmitted: (val) => formkey.currentState.validate()
                         ? answerService.nextQuestion(answer['score'])
                         : null,
                     decoration: InputDecoration(
-                      hintText: 'Enter your email',
+                      hintText: 'Enter your website url',
                       border: OutlineInputBorder(),
                     ),
                   ),

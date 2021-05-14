@@ -27,6 +27,7 @@ dependencies:
   flutter_mobx: ^2.0.0
   font_awesome_flutter: ">= 4.7.0"
   mobx: ^2.0.1
+  email_validator: ^2.0.1
 
 dev_dependencies:
   flutter_test:

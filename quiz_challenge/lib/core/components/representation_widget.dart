@@ -6,8 +6,12 @@ class Representation extends StatelessWidget {
   final Map<String, Object> answers;
   final String type;
   Representation({Key key, this.answers, this.type})
-      : assert(['cara a cara', 'multipla escolha', 'email address']
-            .contains(type)),
+      : assert([
+          'cara a cara',
+          'multipla escolha',
+          'email address',
+          'website url'
+        ].contains(type)),
         super(key: key);
   static final questions = [
     {
@@ -158,7 +162,24 @@ class Representation extends StatelessWidget {
           'representation': Answer(
             answerRepresentation: Container(),
           ).answerRepresentation,
-          'score': .4
+          'score': .2
+        },
+      ],
+    },
+    {
+      'question': [
+        {
+          'text':
+              Question(questionText: 'What is your website url').questionText,
+          'type': Question(questionType: 'website url').questionType
+        },
+      ],
+      'answers': [
+        {
+          'representation': Answer(
+            answerRepresentation: Container(),
+          ).answerRepresentation,
+          'score': .2
         },
       ],
     },
