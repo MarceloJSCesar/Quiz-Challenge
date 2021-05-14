@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:wuiz/core/components/app/app_sizedBox.dart';
-import 'package:wuiz/core/components/representation_widget.dart';
-import 'package:wuiz/core/components/widgets/custom_button_next_widget.dart';
-import 'package:wuiz/core/components/widgets/custom_button_previous_widget.dart';
+import '../components/app/app_sizedBox.dart';
+import '../components/representation_widget.dart';
+import '../components/widgets/custom_button_next_widget.dart';
+import '../components/widgets/custom_button_previous_widget.dart';
 
 class HomeView extends StatefulWidget {
   @override
