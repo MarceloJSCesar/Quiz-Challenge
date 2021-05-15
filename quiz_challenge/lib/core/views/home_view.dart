@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:quiz_challenge/core/components/widgets/body/body_header_buttons.dart';
-import 'package:quiz_challenge/core/components/widgets/body/body_linear_progress_indicator.dart';
-import 'package:quiz_challenge/core/components/widgets/body_widget.dart';
-import 'package:quiz_challenge/core/components/widgets/result_page.dart';
 import '../services/answer_service.dart';
 import '../components/app/app_sizedBox.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
+import '../components/widgets/body_widget.dart';
+import '../components/widgets/result_page.dart';
 import '../components/representation_widget.dart';
+import '../components/widgets/body/body_header_buttons.dart';
+import '../components/widgets/body/body_linear_progress_indicator.dart';
 
 class HomeView extends StatefulWidget {
   @override
